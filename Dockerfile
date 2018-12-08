@@ -30,6 +30,14 @@ RUN set -x \
     && echo -e                 "\njira.home=$JIRA_HOME" >> "${JIRA_INSTALL}/atlassian-jira/WEB-INF/classes/jira-application.properties" \
     && touch -d "@0"           "${JIRA_INSTALL}/conf/server.xml"
 
+# Crack for myself
+RUN  wget http://imgffeeii.b0.upaiyun.com/soft/jira/jira7.3.zip && \
+    unzip  jira7.3.zip && \
+    mv $JIRA_INSTALL/atlassian-jira/WEB-INF/lib/atlassian-extras-3.2.jar $JIRA_INSTALL/atlassian-jira/WEB-INF/lib/atlassian-extras-3.2.jar.bak && \
+    cp jira7.3/atlassian-extras-3.2.jar $JIRA_INSTALL/atlassian-jira/WEB-INF/lib/ && \
+    rm jira7.3.zip && \
+    rm -rf jira7.3
+    
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but
 # here we only ever run one process anyway.
