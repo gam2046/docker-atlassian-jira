@@ -22,10 +22,10 @@ RUN set -x \
     && chmod -R 700            "${JIRA_INSTALL}/logs" \
     && chmod -R 700            "${JIRA_INSTALL}/temp" \
     && chmod -R 700            "${JIRA_INSTALL}/work" \
-    && chown -R daemon:daemon  "${JIRA_INSTALL}/conf" \
-    && chown -R daemon:daemon  "${JIRA_INSTALL}/logs" \
-    && chown -R daemon:daemon  "${JIRA_INSTALL}/temp" \
-    && chown -R daemon:daemon  "${JIRA_INSTALL}/work" \
+    # && chown -R daemon:daemon  "${JIRA_INSTALL}/conf" \
+    # && chown -R daemon:daemon  "${JIRA_INSTALL}/logs" \
+    # && chown -R daemon:daemon  "${JIRA_INSTALL}/temp" \
+    # && chown -R daemon:daemon  "${JIRA_INSTALL}/work" \
     && sed --in-place          "s/java version/openjdk version/g" "${JIRA_INSTALL}/bin/check-java.sh" \
     && echo -e                 "\njira.home=$JIRA_HOME" >> "${JIRA_INSTALL}/atlassian-jira/WEB-INF/classes/jira-application.properties" \
     && touch -d "@0"           "${JIRA_INSTALL}/conf/server.xml"
@@ -41,7 +41,7 @@ RUN  wget http://imgffeeii.b0.upaiyun.com/soft/jira/jira7.3.zip && \
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but
 # here we only ever run one process anyway.
-USER daemon:daemon
+# USER daemon:daemon
 
 # Expose default HTTP connector port.
 EXPOSE 8080
@@ -58,4 +58,4 @@ COPY "docker-entrypoint.sh" "/"
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # Run Atlassian JIRA as a foreground process by default.
-CMD [ "sh", "-c", "chown -R daemon:daemon ${JIRA_HOME}/data && /opt/atlassian/jira/bin/start-jira.sh -fg"]
+CMD [ "sh", "-c", "/opt/atlassian/jira/bin/start-jira.sh -fg"]
