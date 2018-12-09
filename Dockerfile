@@ -58,4 +58,4 @@ COPY "docker-entrypoint.sh" "/"
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # Run Atlassian JIRA as a foreground process by default.
-CMD [ "sh", "-c", "chown -R daemon:daemon ${JIRA_INSTALL}/data && /opt/atlassian/jira/bin/start-jira.sh -fg"]
+CMD [ "sh", "-c", "chown -R daemon:daemon ${JIRA_HOME}/data && /opt/atlassian/jira/bin/start-jira.sh -fg"]
